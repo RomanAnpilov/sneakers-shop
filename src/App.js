@@ -1,37 +1,30 @@
 import Card from "./components/Card/";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
-import React from 'react';
-
-const arr = [
-  {
-    "name": "Мужские Кроссовки Nike Blazer Mid Suede",
-    "price": 12999,
-    "imageUrl": "img/sneakers/1.png",
-  },
-  {
-    "name": "Мужские Кроссовки Nike Air Max 270",
-    "price": 12999,
-    "imageUrl": "img/sneakers/2.png",
-  },
-  {
-    "name": "Мужские Кроссовки Nike Blazer Mid Suede",
-    "price": 8499,
-    "imageUrl": "img/sneakers/3.png",
-  },
-  {
-    "name": "Кроссовки Puma X Aka Boku Future Rider",
-    "price": 8999,
-    "imageUrl": "img/sneakers/4.png",
-  },
-];
+import React from "react";
 
 function App() {
-  const [cartOpened, setCartOpened] = React.useState(false)
+  const [cartOpened, setCartOpened] = React.useState(false);
+  const [cartItems, setCartItems] = React.useState([]);
+  const [items, setItems] = React.useState([]);
+
+  React.useEffect( () => {
+  fetch("https://61895903d0821900178d793f.mockapi.io/items")
+    .then((response) => {
+      return response.json();
+    })
+    .then((json) => {
+      setItems(json);
+    });
+  }, []);
+
+  const onAddToCart = (obj) => {
+    setCartItems(prev => [...prev, obj]);
+  }
 
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer onClose={() => setCartOpened(false)} />}
+      {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} />}
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content">
         <div>
@@ -42,13 +35,13 @@ function App() {
           </div>
         </div>
         <div className="sneakers">
-          {arr.map((obj) => (
+          {items.map((item) => (
             <Card
-              title={obj.name}
-              price={obj.price}
-              imageUrl={obj.imageUrl}
+              title={item.name}
+              price={item.price}
+              imageUrl={item.imageUrl}
               onFavorite={() => console.log("Add to favorite")}
-              onPlus={() => console.log("Add to cart")}
+              onPlus={(obj) => onAddToCart(obj)}
             />
           ))}
         </div>

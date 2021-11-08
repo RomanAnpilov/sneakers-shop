@@ -78,7 +78,7 @@ header {
 .content {
   padding: 40px;
 
-  > div {
+  > div:first-child {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,6 +92,7 @@ header {
 
 .sneakers {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .search-block {
