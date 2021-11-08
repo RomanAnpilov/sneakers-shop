@@ -168,6 +168,8 @@ header {
   z-index: 1;
   .drawer {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     padding: 30px;
     width: 420px;
     height: 100%;
@@ -175,10 +177,78 @@ header {
     background: #FFFFFF;
     box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
 
+    .items {
+      overflow: auto; 
+      margin-bottom: 40px;
+    }
+
     h2 {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 30px;
+
+      img {
+        cursor: pointer;
+      }
+    }
+
+    .items {
+      flex: 1;
     }
   }
+}
+
+.cartTotalBlock {
+  div {
+    flex: 1;
+    height: 1px;
+    border-bottom: 1px dashed #dfdfdf;
+    position: relative;
+    top: -4px;
+    margin: 0 7px;
+  }
+  
+  li {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 20px;
+    }
+  
+  .greenButton {
+    position: relative;
+
+    &:hover img {
+      transform: translateX(5px);
+    }
+
+    img {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}
+
+.greenButton {
+  width: 100%;
+      height: 55px;
+      background: #9DD558;
+      border-radius: 18px;
+      border: 0;
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.1s ease-in-out;
+
+      &:hover {
+        background: lighten($color: #9DD558, $amount: 5%);
+      }
+
+      &:active {
+        background: darken($color: #9DD558, $amount: 5%);
+      }
 }
 
 
