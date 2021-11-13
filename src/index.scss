@@ -69,8 +69,8 @@ header {
       cursor: pointer;
     }
 
-    li:first-child {
-      margin-right: 30px;
+    li:not(:last-child) {
+      margin-right: 20px;
     }
   }
 }
