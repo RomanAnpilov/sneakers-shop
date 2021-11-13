@@ -1,36 +1,37 @@
 import Card from "../components/Card";
+import React from "react";
 
 function Home({
   items,
   searchValue,
-  setSearchValue,
   onChangeSearch,
   onAddToFavorite,
   onAddToCart,
-  cartItems,
   favoriteItems,
   isLoading,
 }) {
   const renderItems = () => {
-    return (
-    isLoading ? [...Array(10)].map(() => (<Card loading />)) : items.filter((item) =>
-    item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => (
-        <Card
-          key={index}
-          loading={isLoading}
-          id={item.id}
-          title={item.name}
-          price={item.price}
-          imageUrl={item.imageUrl}
-          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
-          favorited={favoriteItems.some(
-            (obj) => Number(obj.id) === Number(item.id)
-          )}
-          onFavorite={(obj) => onAddToFavorite(obj)}
-          onPlus={(obj) => onAddToCart(obj)}
-        />
-      ))
-      );
+    return isLoading
+      ? [...Array(10)].map(() => <Card loading />)
+      : items
+          .filter((item) =>
+            item.name.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((item, index) => (
+            <Card
+              key={index}
+              loading={isLoading}
+              id={item.id}
+              title={item.name}
+              price={item.price}
+              imageUrl={item.imageUrl}
+              favorited={favoriteItems.some(
+                (obj) => Number(obj.id) === Number(item.id)
+              )}
+              onFavorite={(obj) => onAddToFavorite(obj)}
+              onPlus={(obj) => onAddToCart(obj)}
+            />
+          ));
   };
 
   return (

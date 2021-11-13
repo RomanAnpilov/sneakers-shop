@@ -173,6 +173,11 @@ header {
       transform: translateX(5px);
     }
 
+    &:disabled {
+      background-color: #bebebe;
+      cursor: default;
+    }
+
     img {
       position: absolute;
       right: 30px;
@@ -244,6 +249,35 @@ header {
 
     &:hover {
       opacity: 1;
+    }
+  }
+}
+
+.cartEmpty {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction:column;
+  flex: 1;
+  p {
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+
+  .greenButton {
+    position: relative;
+
+    &:hover img {
+      transform: translateX(-5px) scaleX(-1);
+    }
+
+    img {
+      transform: scaleX(-1);
+      position: absolute;
+      left: 30px;
+      top: 20px;
+      transition: transform 0.15s ease-in-out;
     }
   }
 }
