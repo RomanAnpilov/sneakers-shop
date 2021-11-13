@@ -7,7 +7,32 @@ function Home({
   onChangeSearch,
   onAddToFavorite,
   onAddToCart,
+  cartItems,
+  favoriteItems,
+  isLoading,
 }) {
+  const renderItems = () => {
+    return (
+    isLoading ? [...Array(10)].map(() => (<Card loading />)) : items.filter((item) =>
+    item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => (
+        <Card
+          key={index}
+          loading={isLoading}
+          id={item.id}
+          title={item.name}
+          price={item.price}
+          imageUrl={item.imageUrl}
+          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+          favorited={favoriteItems.some(
+            (obj) => Number(obj.id) === Number(item.id)
+          )}
+          onFavorite={(obj) => onAddToFavorite(obj)}
+          onPlus={(obj) => onAddToCart(obj)}
+        />
+      ))
+      );
+  };
+
   return (
     <div className="content">
       <div>
@@ -23,22 +48,7 @@ function Home({
           />
         </div>
       </div>
-      <div className="sneakers">
-        {items
-          .filter((item) =>
-            item.name.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => (
-            <Card
-              key={index}
-              title={item.name}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              onFavorite={(obj) => onAddToFavorite(obj)}
-              onPlus={(obj) => onAddToCart(obj)}
-            />
-          ))}
-      </div>
+      <div className="sneakers">{renderItems()}</div>
     </div>
   );
 }
