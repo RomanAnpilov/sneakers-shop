@@ -1,13 +1,16 @@
-import Info from "./Info";
 import React from "react";
-import AppContext from "../context";
 import axios from "axios";
 
-function Drawer({ onClose, onRemove, items = [] }) {
+import Info from "../Info";
+import {useCart} from "../../hooks/useCart"
+
+import styles from "./Drawer.module.scss"
+
+function Drawer({ onClose, onRemove, items = [], opened }) {
   const [isOrderComplete, setIsOrderComplete] = React.useState(false);
   const [orderId, setOrderId] = React.useState(null);
-  const { cartItems, setCartItems } = React.useContext(AppContext);
   const [isLoading, setIsLoading] = React.useState(false);
+  const {cartItems, setCartItems, totalPrice} = useCart();
 
   const onClickOrder = async () => {
     try {
@@ -31,17 +34,17 @@ function Drawer({ onClose, onRemove, items = [] }) {
   };
 
   return (
-    <div className="overlay">
-      <div className="drawer">
+    <div className={ `${styles.overlay} ${opened ? styles.overlayVisible : '' }`  }>
+      <div className={styles.drawer}>
         <h2>
           Корзина{" "}
           <img onClick={onClose} src="img/btn-remove.svg" alt="Button remove" />
         </h2>
         {items.length !== 0 ? (
           <>
-            <div className="items">
-              {items.map((item) => (
-                <div className="cartItem">
+            <div className={styles.items}>
+              {items.map((item, index) => (
+                <div className="cartItem" key={index}>
                   <div
                     style={{ backgroundImage: `url(${item.imageUrl})` }}
                     className="imgItem"
@@ -59,17 +62,17 @@ function Drawer({ onClose, onRemove, items = [] }) {
                 </div>
               ))}
             </div>
-            <div className="cartTotalBlock">
+            <div className={styles.cartTotalBlock}>
               <ul>
                 <li>
                   <span>Итого: </span>
                   <div></div>
-                  <b>21 498 руб. </b>
+                  <b>{totalPrice} руб. </b>
                 </li>
                 <li>
                   <span>Налог 5%: </span>
                   <div></div>
-                  <b>1074 руб. </b>
+                  <b>{(totalPrice*0.05).toFixed(2)} руб. </b>
                 </li>
               </ul>
               <button
